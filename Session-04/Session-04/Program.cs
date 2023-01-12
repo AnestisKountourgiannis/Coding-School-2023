@@ -17,6 +17,7 @@ Console.WriteLine(NumberC);
 Console.WriteLine(NumberD);
 
 //3.Write a C# program to print the result of the specified operations:
+
 int Act1 = ((-1) + (5 * 6));
 Console.WriteLine(Act1);
 int Act2 = (38 + (5 % 7));
@@ -27,3 +28,6 @@ double Act4 = ((2 + (13 / 6)) * 6 + Math.Sqrt(7));
 Console.WriteLine(Act4);
 int Act5 = ((6 ^ 4) + (5 ^ 7) / ((9 % 4)));
 Console.WriteLine(Act5);
+
+//4.Write a C# program that assigns an age (number) (for example 20) and a gender(string) (for example female) and displays something like: "You are female and look younger than 20."
+

@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 
 namespace Session_04
 {
-    //Write a C# program to print the sum of two numbers and the division of those two numbers.
-    public class SumAndDivision {
-        public void printNumbers()
+    public class Exercise4
+    {
+        public static void Main()
         {
-            int NumberA = 8;
-            int NumberB = 2;
-            Console.WriteLine("The Numbers are: " + NumberA + " " + NumberB);
-            int NumberC= NumberA+ NumberB;
-            int NumberD = NumberA / NumberB;
+            int age;
+            Console.Write("Enter your age ");
+            age = Convert.ToInt32(Console.ReadLine());
+            Console.Write("You look younger than {0} ", age);
         }
     }
 }
