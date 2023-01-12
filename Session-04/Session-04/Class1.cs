@@ -9,22 +9,22 @@ namespace Session_04
     //Write a C# program to print the sum of two numbers and the division of those two numbers.
     public class SumAndDivision
     {
-        int NumberA = 8;
-        int NumberB = 2;
+        double NumberA = 8.8;
+        double NumberB = 2.2;
 
         public void printNumbers()
         {
             Console.WriteLine("The Numbers are: " + NumberA + " " + NumberB);
         }
-        public int CalculateSum()
+        public double CalculateSum()
         {
-            int sum = NumberA + NumberB;
+            double sum = NumberA + NumberB;
             return sum;
         }
         
-        public int CalculateDivision()
+        public double CalculateDivision()
         {
-            int division = NumberA / NumberB;
+            double division = NumberA / NumberB;
             return division;
         }
 
