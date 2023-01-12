@@ -4,11 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-string hello = "Hello";
-string name = " Anestis";
-
-Console.WriteLine(hello + name);
-
 namespace Session_04
 {
     //Write a C# program to print the sum of two numbers and the division of those two numbers.
@@ -20,18 +15,8 @@ namespace Session_04
             int NumberA = 8;
             int NumberB = 2;
             Console.WriteLine("The Numbers are: " + NumberA + " " + NumberB);
+            int NumberC= NumberA+ NumberB;
+            int NumberD = NumberA / NumberB;
         }
-        public int CalculateSum()
-        {
-            int sum = NumberA + NumberB;
-            return sum;
-        }
-        
-        public int CalculateDivision()
-        {
-            int division = NumberA / NumberB;
-            return division;
-        }
-
     }
 }
