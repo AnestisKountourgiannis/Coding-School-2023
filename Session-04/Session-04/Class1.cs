@@ -9,7 +9,7 @@ namespace Session_04
     // VAZW KAI GENDER,VAZW NA DEIXNEI KAI GENDER MAZI ME HLIKIA,proxwraw se epomeno
     public class Exercise4
     {
-        public static void Main()
+            public static void main ()
         {
             int age;
             Console.Write("Enter your age ");
@@ -18,4 +18,35 @@ namespace Session_04
         }
 
         }
-    }
+   }
+    // function convert second into day
+    // hours, minutes and seconds
+  //static void ConvertSectoYear (int n)
+   //int year = n /(365*24*3600)
+        //int day = n / (24 * 3600);
+
+        //n = n % (24 * 3600);
+        //int hour = n / 3600;
+
+        //n %= 3600;
+        //int minutes = n / 60;
+
+        //n %= 60;
+        //int seconds = n;
+
+        //Console.WriteLine(year+ " " + day + " "
+              //+ "days " + hour + " "
+          //+ "hours " + minutes + " "
+        //+ "minutes " + seconds + " "
+                        //+ "seconds ");
+    
+
+    // Driver code
+    //public static void Main()
+    
+
+        // Given n is in seconds
+        //int n = 129600;
+
+        //ConvertSectoDay(n);
+    
