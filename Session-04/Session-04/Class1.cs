@@ -6,7 +6,28 @@ using System.Threading.Tasks;
 
 namespace Session_04
 {
-    internal class Class1
+    //Write a C# program to print the sum of two numbers and the division of those two numbers.
+    public class SumAndDivision
     {
+        int NumberA = 8;
+        int NumberB = 2;
+
+        public void printNumbers()
+        {
+            Console.WriteLine("The Numbers are: " + NumberA + " " + NumberB);
+        }
+        public int CalculateSum()
+        {
+            int sum = NumberA + NumberB;
+            return sum;
+
+        }
+        
+        public int CalculateDivision()
+        {
+            int division = NumberA / NumberB;
+            return division;
+        }
+
     }
 }

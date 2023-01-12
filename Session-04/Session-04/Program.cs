@@ -6,11 +6,3 @@ string hello = "Hello";
 string name = " Anestis";
 
 Console.WriteLine(hello + name);
-
-//2.Write a C# program to print the sum of two numbers and the division of those two numbers.
- private void 2()
-
-int numberA = 2;
-int numberB = 8;
-
-int numberC = (numberA + numberB);
