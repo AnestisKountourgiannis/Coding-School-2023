@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 // 1. Write a C# program to print Hello and your name in the same line.
+using System.Globalization;
 using System.Runtime.CompilerServices;
 
 string hello = "Hello";
@@ -48,6 +49,14 @@ int seconds = n;
 
 Console.WriteLine( year + " " + "years " + day + " " + "days " + hour + " " + "hours " + minutes + " " + "minutes " + seconds + " " + "seconds ");
 
+//6.Rewrite Program #5 using .Net Libraries.
+TimeSpan t = TimeSpan.FromSeconds(45678);
+string answer = string.Format(
+      CultureInfo.CurrentCulture,
+      "{0} years, {1} days, {2} hours, {3} minutes", t.Days / 365,
+      (t.Days - (t.Days / 365) * 365) - ((t.Days - (t.Days / 365) * 365) / 30) * 30, t.Hours, t.Minutes);
+Console.WriteLine(" " + answer);
+
 //7.Write a C# program to convert from celsius degrees to Kelvin and Fahrenheit
 Console.Write("Enter the amount of Celsius: ");
 int celsius = Convert.ToInt32(Console.ReadLine());
@@ -62,5 +71,3 @@ int age;
 Console.Write("Enter your age ");
 age = Convert.ToInt32(Console.ReadLine());
 Console.Write("You are {0} and look younger than {1} ", gen,age);
-
-//6.Rewrite Program #5 using .Net Libraries.
