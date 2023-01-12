@@ -20,7 +20,6 @@ namespace Session_04
         {
             int sum = NumberA + NumberB;
             return sum;
-
         }
         
         public int CalculateDivision()
