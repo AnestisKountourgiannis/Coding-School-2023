@@ -30,37 +30,23 @@ int Act5 = ((6 ^ 4) + (5 ^ 7) / ((9 % 4)));
 Console.WriteLine(Act5);
 
 //5.Write a C# program that takes an integer representing seconds (for example 45678) and converts it to :
+int n = 129600;
 
-// function convert second into day
-// hours, minutes and seconds
-//static void ConvertSectoYear (int n)
-//int year = n /(365*24*3600)
-//int day = n / (24 * 3600);
+int year = n / (365 * 86400);
 
-//n = n % (24 * 3600);
-//int hour = n / 3600;
+n = n % (365 * 86400);
+int day = n / (24 * 3600);
 
-//n %= 3600;
-//int minutes = n / 60;
+n = n % (24 * 3600);
+int hour = n / 3600;
 
-//n %= 60;
-//int seconds = n;
+n %= 3600;
+int minutes = n / 60;
 
-//Console.WriteLine(year+ " " + day + " "
-//+ "days " + hour + " "
-//+ "hours " + minutes + " "
-//+ "minutes " + seconds + " "
-//+ "seconds ");
+n %= 60;
+int seconds = n;
 
-
-// Driver code
-//public static void Main()
-
-
-// Given n is in seconds
-//int n = 129600;
-
-//ConvertSectoDay(n);
+Console.WriteLine( year + " " + "years " + day + " " + "days " + hour + " " + "hours " + minutes + " " + "minutes " + seconds + " " + "seconds ");
 
 //7.Write a C# program to convert from celsius degrees to Kelvin and Fahrenheit
 Console.Write("Enter the amount of Celsius: ");
@@ -71,6 +57,7 @@ Console.WriteLine("Fahrenheit = {0}", celsius * 18 / 10 + 32);
 
 //4.Write a C# program that assigns an age (number) (for example 20) and a gender(string) (for example female) and displays something like: "You are female and look younger than 20."
 string gen = "woman";
+//Console.Write("Enter your gender ");
 int age;
 Console.Write("Enter your age ");
 age = Convert.ToInt32(Console.ReadLine());
