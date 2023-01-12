@@ -4,6 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+string hello = "Hello";
+string name = " Anestis";
+
+Console.WriteLine(hello + name);
+
 namespace Session_04
 {
     //Write a C# program to print the sum of two numbers and the division of those two numbers.
