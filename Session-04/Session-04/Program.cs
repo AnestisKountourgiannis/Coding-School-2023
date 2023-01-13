@@ -65,10 +65,10 @@ Console.WriteLine("Kelvin = {0}", celsius + 273);
 Console.WriteLine("Fahrenheit = {0}", celsius * 18 / 10 + 32);
 
 //4.Write a C# program that assigns an age (number) (for example 20) and a gender(string) (for example female) and displays something like: "You are female and look younger than 20."
-string gen = "woman";
+
 //Console.Write("Enter your gender ");
 int age;
 Console.Write("Enter your age ");
 age = Convert.ToInt32(Console.ReadLine());
-Console.Write("You are {0} and look younger than {1} ", gen,age);
+Console.Write("You are and look younger than {0} " ,age);
 
