@@ -12,7 +12,7 @@ namespace Session_06
    //properties
     public class Person
     {
-        public Guid ID { Get; Set; }
+        public Guid ID { get; set; }
         public string? Name { get; set; }
         public int Age { get; set; }
     }
