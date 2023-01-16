@@ -85,3 +85,24 @@ namespace SortArrayExample
         }
     }
 }
+
+// 2. Write a C# program that asks the user for an integer (n) and gives them the possibility to choose between computing the sum and computing the product of 1,…, n.
+
+public class PrintNumbers
+{
+    public static void Main()
+    {
+        System.Int32 n = 0;
+        for (string num = System.Console.ReadLine();
+          !(string.IsNullOrEmpty(num) || null == num); num = num.Substring(1))
+        {
+            n = (n << 4) + (n << 2) - '0' + num[0];
+        }
+
+        int N = n;
+        while (0 < N)
+        {
+            System.Console.WriteLine(~(N-- - n) + (1 << 1));
+        }
+    }
+}
