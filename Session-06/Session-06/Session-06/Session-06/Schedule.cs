@@ -21,15 +21,23 @@ namespace Session_06
         {
             ID= id; 
         }
-        public Schedule(Guid iD, Guid courseID, Guid professorID) 
+        public Schedule(Guid id, Guid courseid)
         {
-            CourseID = courseID;
-            ProfessorID = professorID;
+            ID= id;
+            CourseID= courseid;
+
         }
-        public Schedule(Guid iD, Guid courseID, Guid professorID, DateTime callendar) : this(iD, courseID, professorID)
+        public Schedule(Guid id, Guid courseid, Guid professorid) 
         {
-            CourseID = courseID;
-            ProfessorID = professorID;
+            ID = id;
+            CourseID = courseid;
+            ProfessorID = professorid;
+        }
+        public Schedule(Guid id, Guid courseid, Guid professorid, DateTime callendar) 
+        {
+            ID = id;
+            CourseID = courseid;
+            ProfessorID = professorid;
             Callendar = callendar;
         }
     }
