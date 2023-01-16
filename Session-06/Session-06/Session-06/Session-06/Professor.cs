@@ -18,7 +18,7 @@ namespace Session_06
         {
             Courses = new Course[20];
         }
-        public Professor(Guid id, string name) : base(id, name)
+        public Professor(Guid id, string name) : base( id, name)
         {
 
         }

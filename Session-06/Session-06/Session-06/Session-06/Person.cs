@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Session_06
 {
-   //properties
+    //properties
     public class Person
     {
         public Guid ID { get; set; }
