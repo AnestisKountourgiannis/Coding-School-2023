@@ -5,21 +5,29 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Session_06
 {
-    public partial class Professor : Component
-    {
+    public class Professor : Person
+    { 
+        public string Rank { get; set; }
+        public Course[] Courses;
+        
         public Professor()
         {
-            InitializeComponent();
+            Courses = new Course[20];
         }
-
-        public Professor(IContainer container)
+        public Professor(Guid id, string name) : base(id, name)
         {
-            container.Add(this);
 
-            InitializeComponent();
         }
+        public Professor(Guid id,string name,string rank, Course[] course): base(id, name)
+        {
+            Rank = rank;
+            Courses = course;
+        }
+        public void Teach(Course course,DateTime datetime) { }
+        public void SetGrade() { }
     }
 }
