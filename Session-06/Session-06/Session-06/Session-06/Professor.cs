@@ -9,18 +9,18 @@ using System.Xml.Serialization;
 
 namespace Session_06
 {
-    public class Professor : Person
+    internal class Professor : Person
     { 
+        //properties
         public string Rank { get; set; }
-        public Course[] Courses;
-        
-        public Professor()
+        public Course[]? Courses {get; set; )
+        //constructors
+        public Professor() : base() { }
+        public Professor(Guid id): base( id) { }
+        public Professor(Guid id, string name) : base( id, name) { }
+        public Professor(Guid id, string name, string rank) : base(id, name)
         {
-            Courses = new Course[20];
-        }
-        public Professor(Guid id, string name) : base( id, name)
-        {
-
+            Rank = rank;
         }
         public Professor(Guid id,string name,string rank, Course[] course): base(id, name)
         {
@@ -28,6 +28,10 @@ namespace Session_06
             Courses = course;
         }
         public void Teach(Course course,DateTime datetime) { }
-        public void SetGrade() { }
+        public void SetGrade(Guid studentID,Guid courseID,int grade) { }
+        public static new string GetName()
+        {
+           return String.Format("Dr. (0)",name);
+        }
     }
 }
