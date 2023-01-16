@@ -28,3 +28,60 @@ class Name
         Console.WriteLine(Reverse("AnestisKountourgiannis"));
     }
 }
+
+// 3. Write a C# program that asks the user for an integer (n) and finds all the prime numbers from 1 to n.
+ 
+  public class PrimeNumberExample
+{
+    public static void Main(string[] args)
+    {
+        int n, i, m = 0, flag = 0;
+        Console.Write("Enter the Number to check Prime: ");
+        n = int.Parse(Console.ReadLine());
+        m = n / 2;
+        for (i = 2; i <= m; i++)
+        {
+            if (n % i == 0)
+            {
+                Console.Write("Number is not Prime.");
+                flag = 1;
+                break;
+            }
+        }
+        if (flag == 0)
+            Console.Write("Number is Prime.");
+    }
+}
+
+//5. Write a C# program to sort the given array of integers from the lowest to the highest number.
+
+namespace SortArrayExample
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] intArray = new int[] { 0, -2, 1, 20, -31, 50, -4, 17, 89, 100 };
+            int temp = 0;
+
+            for (int i = 0; i <= intArray.Length - 1; i++)
+            {
+                for (int j = i + 1; j < intArray.Length; j++)
+                {
+                    if (intArray[i] > intArray[j])
+                    {
+                        temp = intArray[i];
+                        intArray[i] = intArray[j];
+                        intArray[j] = temp;
+                    }
+                }
+            }
+            Console.WriteLine("Array sort in asscending order");
+            foreach (var item in intArray)
+            {
+                Console.WriteLine(item);
+            }
+            Console.ReadLine();
+        }
+    }
+}
