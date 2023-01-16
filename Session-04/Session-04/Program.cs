@@ -70,5 +70,5 @@ Console.WriteLine("Fahrenheit = {0}", celsius * 18 / 10 + 32);
 int age;
 Console.Write("Enter your age ");
 age = Convert.ToInt32(Console.ReadLine());
-Console.Write("You are and look younger than {0} " ,age);
+Console.WriteLine("You look younger than {0} " ,age);
 
