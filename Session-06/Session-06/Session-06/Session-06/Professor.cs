@@ -13,7 +13,7 @@ namespace Session_06
     { 
         //properties
         public string Rank { get; set; }
-        public Course[]? Courses {get; set; )
+        public Course[]? Courses { get; set; }
         //constructors
         public Professor() : base() { }
         public Professor(Guid id): base( id) { }
@@ -31,7 +31,7 @@ namespace Session_06
         public void SetGrade(Guid studentID,Guid courseID,int grade) { }
         public static new string GetName()
         {
-           return String.Format("Dr. (0)",name);
+           return String.Format("Dr. (0)", name);
         }
     }
 }

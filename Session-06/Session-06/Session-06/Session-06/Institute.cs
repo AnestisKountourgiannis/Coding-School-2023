@@ -21,18 +21,18 @@ namespace Session_06
     }
     public Institute(Guid id)
     {
-        ID = id;
+        Guid ID = id;
     }
     public Institute(Guid id, string name)
     {
-        ID = id;
-        Name = name;
+       Guid  ID = id;
+       string Name = name;
     }
     public Institute(Guid id, string name, int age)
     {
-        ID = id;
-        Name = name;
-        YearsInService = age;
+       Guid ID = id;
+       string Name = name;
+        int YearsInService = age;
     }
     //Methods
     public void GetName()
