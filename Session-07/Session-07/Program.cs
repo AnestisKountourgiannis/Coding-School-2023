@@ -99,6 +99,10 @@ public ActionRequest(Guid requestid,string input)
         }
         public ActionResponse Execute(ActionRequest requestid)
         {
+            if (Requestid !=null)
+            {
+                return Requestid;
+            }
             return null;
         }
     }
