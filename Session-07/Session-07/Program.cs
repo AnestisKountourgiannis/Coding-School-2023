@@ -58,7 +58,10 @@ public ActionRequest(Guid requestid,string input)
     public class MessageLogger
     {
         public Message[]? Messages { get; set; }
-
+        public MessageLogger(Message[] messages)
+        {
+            Messages = messages;
+        }
         public void ReadAll() {
         }
         public void Clear() {
