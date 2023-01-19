@@ -7,9 +7,18 @@ namespace Session_09
             InitializeComponent();
         }
 
-        private void button11_Click(object sender, EventArgs e)
+        private void Zerobutton_Click(object sender, EventArgs e)
         {
-
+            {
+                if (TxtBox.Text == "0")
+                {
+                    TtxBox.Text = "0";
+                }
+                else
+                {
+                    txtBox.Text += "0";
+                }
+            } 
         }
     }
 }
