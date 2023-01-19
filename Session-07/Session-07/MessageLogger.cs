@@ -8,19 +8,25 @@ namespace Session_07
 {
     public class MessageLogger
     {
-        public Message[]? Messages { get; set; }
-        public MessageLogger(Message[] messages)
+        public MessageLogger()
         {
-            Messages = messages;
+            Messages = new Message[1000];
         }
+        public Message[] Messages { get; set; }
+        private int _messageCounter = 0;
+        public MessageLogger(Message[] messages) { }
+        
         public void ReadAll()
         {
         }
         public void Clear()
         {
         }
-        public void Write(Message)
+        public void Write(Message message)
         {
+                Messages[_messageCounter] = message;
+            _messageCounter++
+            }
         }
     }
 }

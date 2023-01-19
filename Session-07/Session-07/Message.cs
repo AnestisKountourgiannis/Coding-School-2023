@@ -10,7 +10,7 @@ namespace Session_07
     {
         public Guid ID { get; set; }
         public DateTime TimeStamp { get; set; }
-        public string? Message { get; set; }
+        public string? Text { get; set; }
         public Message() { }
         public Message(Guid id)
         {
@@ -25,7 +25,7 @@ namespace Session_07
         {
             ID = id;
             TimeStamp = timeStamp;
-            Message = message;
+            Text = message;
         }
     }
 }
