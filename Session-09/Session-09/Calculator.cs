@@ -2,6 +2,9 @@ namespace Session_09
 {
     public partial class Calculator : Form
     {
+        private decimal? _value1 = null;
+        private decimal? _value2 = null;
+        private decimal? _result = null;
         public Calculator()
         {
             InitializeComponent();
