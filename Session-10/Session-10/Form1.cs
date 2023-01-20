@@ -3,7 +3,7 @@ using System.Windows.Forms;
 namespace Session_10 {
     public partial class Form1 : Form {
 
-        List<Student> students;
+        List<Students> students;
 
         public Form1() {
             InitializeComponent();
@@ -20,22 +20,22 @@ namespace Session_10 {
 
             List<University> unis = GetUniversities();
 
-            students = new List<Student>();
+            students = new List<Students>();
 
-            Student student1 = new Student() {
+            Students student1 = new Students() {
                 Name = "Dimitris",
                 Surname = "Raptodimos",
-                Gender = Student.GenderEnum.Male,
+                Gender = Students.GenderEnum.Male,
                 Age = 40,
                 Undergraduate = false,
                 UniversityID = unis[0].ID,
             };
             students.Add(student1);
 
-            Student student2 = new Student() {
+            Students student2 = new Students() {
                 Name = "Fotis",
                 Surname = "Chrysoulas",
-                Gender = Student.GenderEnum.Male,
+                Gender = Students.GenderEnum.Male,
                 Age = 44,
                 Undergraduate = true,
                 UniversityID = unis[1].ID
@@ -89,9 +89,9 @@ namespace Session_10 {
             grvStudents.DataSource = bsStudents;
 
             DataGridViewComboBoxColumn colGender = grvStudents.Columns["colGender"] as DataGridViewComboBoxColumn;
-            colGender.Items.Add(Student.GenderEnum.Male);
-            colGender.Items.Add(Student.GenderEnum.Female);
-            colGender.Items.Add(Student.GenderEnum.Other);
+            colGender.Items.Add(Students.GenderEnum.Male);
+            colGender.Items.Add(Students.GenderEnum.Female);
+            colGender.Items.Add(Students.GenderEnum.Other);
 
             DataGridViewComboBoxColumn colUniversity1 = grvStudents.Columns["colUniversity"] as DataGridViewComboBoxColumn;
             colUniversity1.DataSource = GetUniversities();
@@ -110,7 +110,7 @@ namespace Session_10 {
             DataGridViewButtonColumn col = grv.Columns[e.ColumnIndex] as DataGridViewButtonColumn;
 
             if (col != null && col.Name == "colShowID" && e.RowIndex >= 0) {
-                Student student = grv.CurrentRow.DataBoundItem as Student;
+                Students student = grv.CurrentRow.DataBoundItem as Students;
                 MessageBox.Show($"The ID of student {student.Surname} {student.Name} is {student.ID}");
             }
         }

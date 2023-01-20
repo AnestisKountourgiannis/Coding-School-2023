@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Session_10 {
-    public class Student {
+    public class Students {
 
-        public Student() {
+        public Students() {
             ID = Guid.NewGuid();
         }
 
