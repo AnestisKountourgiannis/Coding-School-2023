@@ -15,7 +15,7 @@ namespace Session_09
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Calculator_Load(object sender, EventArgs e)
         {
 
         }
@@ -37,7 +37,7 @@ namespace Session_09
             }
             ctrlDisplay.Text += _result;
         }
-        private void btnOne_Click(object sender, EventArgs e)
+        private void Onebutton_Click(object sender, EventArgs e)
         {
             if (_result != null)
             {
