@@ -12,9 +12,9 @@ namespace Libs
         public DateTime Date { get; set; }
         public Guid CustomerID { get; set; }
         public Guid EmployeeID { get; set; }
-        public Enum PaymentMethod { get; set; }
+        public PaymentMethod PaymentMethod { get; set; }
         public List<TransactionLine> TransactionLines { get; set; }
-        public double TotalPrice { get; set; }
+        public decimal TotalPrice { get; set; }
 
         public PaymentMethod PaymentMean { get; set; }
     
