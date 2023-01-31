@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Session_11 {
-    
+
     public partial class ProductF : Form {
 
         CoffeeShopHandler ProductData = new();
@@ -32,19 +32,26 @@ namespace Session_11 {
         }
 
         private void btnAddNew_Click(object sender, EventArgs e) {
-            // bsProducts.AddNew(); 
-           Product tmpEmp = new Product() {
-                Code = tBoxCode.Text,
-                Description = tBoxDescription.Text,
-                Price = Convert.ToDecimal(tBoxPrice.Text),
-                Cost = Convert.ToDecimal(tBoxCost.Text)
-            };
-            ProductData.Products.Add(tmpEmp);
-            MessageBox.Show("Added new product!");
-            ResetGVs();
-        }
+            try {
+                if (tBoxCode.Text != null && tBoxDescription.Text != null && tBoxPrice.Text != null && tBoxCost.Text != null) {
+                    Product tmpEmp = new Product() {
+                        Code = tBoxCode.Text,
+                        Description = tBoxDescription.Text,
+                        Price = Convert.ToDecimal(tBoxPrice.Text),
+                        Cost = Convert.ToDecimal(tBoxCost.Text)
+                    };
+                    ProductData.Products.Add(tmpEmp);
+                    MessageBox.Show("Added new product!");
+                    ResetGVs();
+                }
+                else {
+                    MessageBox.Show("Empty Info fields detected");
+                }
+            }catch(Exception ex) { MessageBox.Show("Empty Info fields detected"); }
+            }
+        
 
-        private void btnRemoveProduct_Click(object sender, EventArgs e) {
+    private void btnRemoveProduct_Click(object sender, EventArgs e) {
             
         }
         private void ResetGVs() {

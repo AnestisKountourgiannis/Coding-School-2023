@@ -48,9 +48,10 @@
             // 
             // btnOrder
             // 
-            this.btnOrder.Location = new System.Drawing.Point(676, 458);
+            this.btnOrder.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnOrder.Location = new System.Drawing.Point(830, 487);
             this.btnOrder.Name = "btnOrder";
-            this.btnOrder.Size = new System.Drawing.Size(97, 47);
+            this.btnOrder.Size = new System.Drawing.Size(110, 53);
             this.btnOrder.TabIndex = 2;
             this.btnOrder.Text = "Add New Order";
             this.btnOrder.UseVisualStyleBackColor = true;
@@ -58,10 +59,10 @@
             // 
             // gridTransactions
             // 
-            this.gridTransactions.Location = new System.Drawing.Point(2, 12);
+            this.gridTransactions.Location = new System.Drawing.Point(12, 14);
             this.gridTransactions.MainView = this.grvTransactions;
             this.gridTransactions.Name = "gridTransactions";
-            this.gridTransactions.Size = new System.Drawing.Size(840, 214);
+            this.gridTransactions.Size = new System.Drawing.Size(928, 243);
             this.gridTransactions.TabIndex = 3;
             this.gridTransactions.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grvTransactions});
@@ -73,6 +74,7 @@
             this.colDate,
             this.colPaymentMethod,
             this.colTotalPrice});
+            this.grvTransactions.DetailHeight = 397;
             this.grvTransactions.GridControl = this.gridTransactions;
             this.grvTransactions.Name = "grvTransactions";
             this.grvTransactions.OptionsBehavior.Editable = false;
@@ -115,10 +117,10 @@
             // 
             // gridEmployees
             // 
-            this.gridEmployees.Location = new System.Drawing.Point(2, 246);
+            this.gridEmployees.Location = new System.Drawing.Point(12, 275);
             this.gridEmployees.MainView = this.grvEmployees;
             this.gridEmployees.Name = "gridEmployees";
-            this.gridEmployees.Size = new System.Drawing.Size(840, 182);
+            this.gridEmployees.Size = new System.Drawing.Size(928, 206);
             this.gridEmployees.TabIndex = 6;
             this.gridEmployees.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grvEmployees});
@@ -129,6 +131,7 @@
             this.colName,
             this.colSurname,
             this.colType});
+            this.grvEmployees.DetailHeight = 397;
             this.grvEmployees.GridControl = this.gridEmployees;
             this.grvEmployees.Name = "grvEmployees";
             this.grvEmployees.OptionsBehavior.Editable = false;
@@ -160,12 +163,13 @@
             // 
             // TransactionF
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(854, 507);
+            this.ClientSize = new System.Drawing.Size(952, 550);
             this.Controls.Add(this.gridEmployees);
             this.Controls.Add(this.gridTransactions);
             this.Controls.Add(this.btnOrder);
+            this.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Name = "TransactionF";
             this.Text = "TransactionF";
             this.Load += new System.EventHandler(this.TransactionF_Load);

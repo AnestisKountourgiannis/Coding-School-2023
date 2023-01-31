@@ -16,7 +16,7 @@ namespace Libs
         public List<TransactionLine> TransactionLines { get; set; }
         public decimal TotalPrice { get; set; }
 
-        public PaymentMethod PaymentMean { get; set; }
+       
     
         public Transaction()
         {

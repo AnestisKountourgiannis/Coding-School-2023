@@ -1,4 +1,7 @@
-﻿using Libs;
+﻿using DevExpress.Utils.Extensions;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Repository;
+using Libs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,13 +32,16 @@ namespace Session_11 {
             InitializeComponent();
             bsProducts.DataSource = CoffeeData.Products;
             gridProducts.DataSource = bsProducts;
-
+            bsTransactions.DataSource = THandler._transaction;
             bsTransactionLines.DataSource = THandler._transaction.TransactionLines;
             gridTransactionLines.DataSource = bsTransactionLines;
+            lookUpPaymentMethod.DataBindings.Add(new Binding("EditValue", bsTransactions, "PaymentMethod", true));
         }
 
         private void TransactionDetailsF_Load(object sender, EventArgs e) {
             UpdateLabelTotalPrice();
+            PopulatePaymentMethod(lookUpPaymentMethod.Properties);
+            
 
         }
         private void RefreshGv() {
@@ -99,6 +105,20 @@ namespace Session_11 {
         private void btnCancel_Click(object sender, EventArgs e) {
             THandler._transaction.TransactionLines.Clear();
             this.Close();
+        }
+
+        public static void PopulatePaymentMethod(RepositoryItemLookUpEdit lookup) {
+            var types = new Dictionary<PaymentMethod, string>()
+            {
+            { PaymentMethod.Cash, "Cash" },
+            { PaymentMethod.CreditCard, "Credit Card" }
+        };
+
+            lookup.DataSource = types;
+            lookup.Columns.Add(new LookUpColumnInfo("Value"));
+            lookup.DisplayMember = "Value";
+            lookup.ValueMember = "Key";
+            lookup.ShowHeader = false;
         }
     }
 }

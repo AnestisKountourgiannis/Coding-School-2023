@@ -98,6 +98,7 @@
             // 
             // btnSaveProduct
             // 
+            this.btnSaveProduct.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnSaveProduct.Location = new System.Drawing.Point(649, 310);
             this.btnSaveProduct.Name = "btnSaveProduct";
             this.btnSaveProduct.Size = new System.Drawing.Size(139, 47);
@@ -108,6 +109,7 @@
             // 
             // btnLoadProduct
             // 
+            this.btnLoadProduct.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnLoadProduct.Location = new System.Drawing.Point(498, 310);
             this.btnLoadProduct.Name = "btnLoadProduct";
             this.btnLoadProduct.Size = new System.Drawing.Size(145, 47);
@@ -118,7 +120,8 @@
             // 
             // btnAddNew
             // 
-            this.btnAddNew.Location = new System.Drawing.Point(475, 377);
+            this.btnAddNew.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnAddNew.Location = new System.Drawing.Point(575, 363);
             this.btnAddNew.Name = "btnAddNew";
             this.btnAddNew.Size = new System.Drawing.Size(145, 47);
             this.btnAddNew.TabIndex = 3;
@@ -132,28 +135,28 @@
             // 
             // tBoxCode
             // 
-            this.tBoxCode.Location = new System.Drawing.Point(12, 390);
+            this.tBoxCode.Location = new System.Drawing.Point(12, 363);
             this.tBoxCode.Name = "tBoxCode";
             this.tBoxCode.Size = new System.Drawing.Size(100, 23);
             this.tBoxCode.TabIndex = 5;
             // 
             // tBoxDescription
             // 
-            this.tBoxDescription.Location = new System.Drawing.Point(118, 390);
+            this.tBoxDescription.Location = new System.Drawing.Point(121, 363);
             this.tBoxDescription.Name = "tBoxDescription";
             this.tBoxDescription.Size = new System.Drawing.Size(100, 23);
             this.tBoxDescription.TabIndex = 6;
             // 
             // tBoxPrice
             // 
-            this.tBoxPrice.Location = new System.Drawing.Point(224, 390);
+            this.tBoxPrice.Location = new System.Drawing.Point(236, 363);
             this.tBoxPrice.Name = "tBoxPrice";
             this.tBoxPrice.Size = new System.Drawing.Size(100, 23);
             this.tBoxPrice.TabIndex = 7;
             // 
             // tBoxCost
             // 
-            this.tBoxCost.Location = new System.Drawing.Point(330, 390);
+            this.tBoxCost.Location = new System.Drawing.Point(353, 363);
             this.tBoxCost.Name = "tBoxCost";
             this.tBoxCost.Size = new System.Drawing.Size(100, 23);
             this.tBoxCost.TabIndex = 8;

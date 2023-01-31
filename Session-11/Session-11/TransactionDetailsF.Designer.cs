@@ -161,27 +161,27 @@
             // 
             // btnRemove
             // 
-            this.btnRemove.Location = new System.Drawing.Point(402, 424);
+            this.btnRemove.Location = new System.Drawing.Point(449, 405);
             this.btnRemove.Name = "btnRemove";
-            this.btnRemove.Size = new System.Drawing.Size(106, 22);
+            this.btnRemove.Size = new System.Drawing.Size(106, 41);
             this.btnRemove.TabIndex = 11;
             this.btnRemove.Text = "Remove";
             this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(546, 424);
+            this.btnSave.Location = new System.Drawing.Point(561, 405);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(105, 22);
+            this.btnSave.Size = new System.Drawing.Size(105, 41);
             this.btnSave.TabIndex = 12;
             this.btnSave.Text = "Save";
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(672, 424);
+            this.btnCancel.Location = new System.Drawing.Point(672, 405);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(118, 22);
+            this.btnCancel.Size = new System.Drawing.Size(118, 41);
             this.btnCancel.TabIndex = 13;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -197,9 +197,11 @@
             // 
             // labelCustomer
             // 
+            this.labelCustomer.Appearance.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelCustomer.Appearance.Options.UseFont = true;
             this.labelCustomer.Location = new System.Drawing.Point(21, 12);
             this.labelCustomer.Name = "labelCustomer";
-            this.labelCustomer.Size = new System.Drawing.Size(63, 13);
+            this.labelCustomer.Size = new System.Drawing.Size(75, 16);
             this.labelCustomer.TabIndex = 15;
             this.labelCustomer.Text = "labelControl1";
             // 
@@ -256,15 +258,17 @@
             this.label2.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label2.Location = new System.Drawing.Point(309, 40);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 20);
+            this.label2.Size = new System.Drawing.Size(74, 20);
             this.label2.TabIndex = 19;
-            this.label2.Text = "Amount:";
+            this.label2.Text = "Quantity:";
             // 
             // labelTotalPrice
             // 
+            this.labelTotalPrice.Appearance.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelTotalPrice.Appearance.Options.UseFont = true;
             this.labelTotalPrice.Location = new System.Drawing.Point(672, 41);
             this.labelTotalPrice.Name = "labelTotalPrice";
-            this.labelTotalPrice.Size = new System.Drawing.Size(63, 13);
+            this.labelTotalPrice.Size = new System.Drawing.Size(75, 16);
             this.labelTotalPrice.TabIndex = 20;
             this.labelTotalPrice.Text = "labelControl1";
             // 

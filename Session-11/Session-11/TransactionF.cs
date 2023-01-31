@@ -34,5 +34,9 @@ namespace Session_11 {
             transactionDetailForm.ShowDialog();
             grvTransactions.RefreshData();
         }
+
+        private void gridTransactions_Click(object sender, EventArgs e) {
+
+        }
     }
 }
