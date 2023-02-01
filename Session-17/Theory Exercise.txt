@@ -2,8 +2,7 @@
 
 -Μην έχοντας ολόκληρο το url,κοιτάμε το API documentation.Θα βρούμε στοιχεία για την δημιουργία ενος request,διεύθυνση URL,request body και headers. 
 
-2.)Αν κάνω ενα GET request και ζητήσω ενα jpeg image, το response τι 
-content-type πρεπει να εχει;
+2.)Αν κάνω ενα GET request και ζητήσω ενα jpeg image, το response τι content-type πρεπει να εχει;
 
 -Πρέπει σε κάθε περίπτωση να έχει (image/jpeg).
 
