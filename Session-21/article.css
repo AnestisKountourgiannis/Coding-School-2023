@@ -1,3 +1,169 @@
-﻿body
-{
+﻿body {
+    background-color: #f5f8fa;
+    display: flex;
+    flex-direction: column;
+    color: #181c32;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
+    box-sizing: border-box;
+    margin: auto;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(240, 240, 234);
+    padding: 0px 10px;
+}
+
+.nav {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+    .nav li {
+        display: inline;
+        padding: 30px;
+    }
+
+        .nav li a:hover {
+            background-color: rgb(227, 223, 223);
+            border-radius: 10px;
+        }
+
+        .nav li a {
+            color: green;
+        }
+
+a:link {
+    text-decoration: none;
+}
+
+.content {
+    padding: 20px;
+    margin: auto;
+}
+
+.article {
+    display: flex;
+    margin-left: -50px;
+}
+
+.article-img {
+    scale: 75%;
+    margin-top: -100px;
+}
+
+.main {
+    margin-left: -60px;
+}
+
+.side {
+    padding-left: 10px;
+}
+
+.side-links li {
+    padding: 5px 0;
+    padding-left: 10px;
+}
+
+.side-links a {
+    color: green;
+    text-decoration: none;
+}
+
+    .side-links a:hover {
+        color: grey;
+    }
+
+
+.form-item {
+    margin: 10px 0;
+}
+
+    .form-item label {
+        display: block;
+        font-weight: bold;
+    }
+
+    .form-item input {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+
+    .form-item textarea {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        min-height: 100px;
+        margin-top: 10px;
+    }
+
+h1 {
+    font-weight: normal;
+    text-align: center;
+}
+
+h2 {
+    font-weight: normal;
+}
+
+form {
+    font-weight: normal;
+}
+
+.form-item label {
+    font-weight: normal;
+}
+
+button {
+    font-weight: bold;
+    border-radius: 50px;
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+}
+
+@media only screen and (max-width: 800px) {
+    body {
+        font-size: 14px;
+        max-width: max-content;
+    }
+
+    header {
+        flex-direction: column;
+    }
+
+    .nav {
+        flex-direction: column;
+    }
+
+        .nav li {
+            padding: 10px 0;
+        }
+
+    .content {
+        padding: 10px;
+    }
+
+    .article {
+        flex-direction: column;
+        padding-left: 50px;
+    }
+
+    .article-img {
+        margin-top: 0;
+    }
+
+    .main {
+        margin-left: 0;
+    }
+
+    .side {
+        padding-left: 0;
+    }
 }
