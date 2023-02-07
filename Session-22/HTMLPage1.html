@@ -1,0 +1,183 @@
+﻿<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session-22</title>
+    <style>
+        .row {
+            margin: 0px 0px 15px 0px;
+            text-align: center;
+        }
+        .forma {
+            text-align: center;
+            display: inline-block;
+        }
+        #input-palindrome {
+            background-color: lightgray;
+        }
+        #lstList li {
+            display: inline;
+            border: 1px solid;
+        }
+        body {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="row" id="ask1">
+        <strong>String Reverser</strong> <br>
+        <label for="input-text">Input:</label>
+        <input id="input-text" type="text" onkeyup="ChangeReversedInput()" value="Anekou"> </input>
+        <br><label for="reversed-text">Reversed:</label>
+        <span id="reversed-text"></span>
+    </div>
+    <div class="row" id="ask2">
+        <strong>Palindrome Checker</strong><br>
+        <label for="input-palindrome">Input:</label>
+        <input id="input-palindrome" type="text" onkeyup="ChangePalindromeColor()"> </input>
+    </div>
+    <div class="row customers">
+        <form class="forma" id="frmMain">
+            <input id="txtSelectedId" type="hidden">
+            <table>
+                <tr>
+                    <td><label for="txtName">Name:</label></td>
+                    <td><input id="txtName"></td>
+                </tr>
+                <tr>
+                    <td><label for="txtSurname">Surname:</label></td>
+                    <td><input id="txtSurname"></td>
+                </tr>
+                <tr>
+                    <td><label for="txtAge">Age:</label></td>
+                    <td><input id="txtAge"></td>
+                </tr>
+                <tr>
+                    <td><label for="selGender">Gender:</label></td>
+                    <td>
+                        <select id="selGender" name="gender">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button id="btnAddToList" type="button" onclick="addToList()">Add To List</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <div class="customers-list">
+            <ul id="lstList"></ul>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript">
+    window.addEventListener('load', ChangeReversedInput());
+    function ChangeReversedInput() {
+        CheckInputChanges();
+        let input = document.getElementById('input-text').value;
+        document.getElementById('reversed-text').textContent = ReverseString(input);
+    }
+    function CheckInputChanges() {
+        document.getElementById('input-text').blur;
+        document.getElementById('input-text').focus;
+    }
+    function ReverseString(str) {
+        if (str === "")
+            return "";
+        return ReverseString(str.substr(1)) + str.charAt(0);
+    }
+    function ChangePalindromeColor(){
+    let inputElement=document.getElementById('input-palindrome');
+    let input = inputElement.value
+    if(input === ''){
+        inputElement.style.backgroundColor='lightgray';
+        return;
+    }
+    let reversedInput = ReverseString(input);
+    if(input.localeCompare(reversedInput) == 0){
+        inputElement.style.backgroundColor='lightgreen';
+    }
+    else{
+        inputElement.style.backgroundColor='red';
+    }
+}
+
+var itemsList = [];
+var incId = 0;
+
+
+function addToList() {
+    var name = document.getElementById("txtName").value;
+    var surname = document.getElementById("txtSurname").value;
+    var age = +document.getElementById("txtAge").value;
+    var gender = document.getElementById('selGender').value;
+    var selectedId = +document.getElementById("txtSelectedId").value;
+    if (selectedId) {
+        for(var i=0; i<itemsList.length; i++){
+            var curItem = itemsList[i];
+            if(curItem.id !== selectedId )
+                continue;
+            curItem.name = name;
+            curItem.surname = surname;
+            curItem.age = age;
+            curItem.gender = gender;
+            break;
+        }
+    } else {
+        incId += 1;
+        itemsList.push({ id: incId, name, surname, age, gender });
+    }
+    redrawList();
+}
+function redrawList() { //function to redraw html table
+    var lstList = document.getElementById("lstList");
+    lstList.innerHTML = "";
+    for (var i = 0; i < itemsList.length; i++) {
+        var curListItem = itemsList[i];
+        var tmpLi = document.createElement("li");
+        var labelName = document.createElement('label');
+        var labelID = document.createElement('label');
+        var labelSurname = document.createElement('label');
+        var labelAge = document.createElement('label');
+        var labelGender = document.createElement('label');
+        labelID.innerText="ID: " + curListItem.id;
+        labelName.innerText=" Name: " + curListItem.name;
+        labelSurname.innerText=" Surname: " + curListItem.surname;
+        labelAge.innerText=" Age: " + curListItem.age;
+        labelGender.innerText=" Gender: " + curListItem.gender;
+        tmpLi.appendChild(labelName);
+        tmpLi.appendChild(labelSurname);
+        tmpLi.appendChild(labelAge);
+        tmpLi.appendChild(labelGender);
+        tmpLi.appendChild(document.createTextNode(" ID: "+ curListItem.id));
+        tmpLi.setAttribute('data-id', curListItem.id);
+        tmpLi.setAttribute('name', curListItem.name);
+        tmpLi.addEventListener('click', (event) => {
+            loadSelectedItem(event);
+        });
+        lstList.appendChild(tmpLi);
+    }
+}
+function multiply(a, b){
+    if(!(typeof(a)=='number' && typeof(b)=='number'))
+        return NaN;
+    return a * b;
+}
+function incrementString(str) {
+  let lastChar = str.slice(-1);
+  let num = parseInt(lastChar);
+
+  if (!isNaN(num)) {
+    return str.substring(0, str.length - 1) + (num + 1);
+  } else {
+    return str + "1";
+  }
+}
+</script>
