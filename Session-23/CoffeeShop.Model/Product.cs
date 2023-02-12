@@ -18,7 +18,7 @@
         public decimal Price { get; set; }
         public decimal Cost { get; set; }
 
-        // Relations
+       
         public int ProductCategoryId { get; set; }
         public ProductCategory ProductCategory { get; set; } = null!;
 

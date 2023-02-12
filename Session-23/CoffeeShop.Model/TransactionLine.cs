@@ -15,7 +15,7 @@
         public decimal Price { get; set; }
         public decimal TotalPrice { get; set; }
 
-        // Relations
+     
         public int TransactionId { get; set; }
         public Transaction Transaction { get; set; } = null!;
 

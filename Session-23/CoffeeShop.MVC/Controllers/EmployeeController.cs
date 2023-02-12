@@ -13,14 +13,14 @@ namespace CoffeeShop.MVC.Controllers {
             _transactionRepo = transactionRepo;
 
         }
-        // GET: EmployeeController
+        
         public ActionResult Index() {
             var emp = _employeeRepo.GetAll();
             var employees = emp.ToList();
             return View(model:employees);
         }
 
-        // GET: EmployeeController/Details/5
+        
         public ActionResult Details(int? id) {
             var employee = _employeeRepo.GetById(id.Value);
             if (id == null) {
@@ -46,14 +46,14 @@ namespace CoffeeShop.MVC.Controllers {
             return View(model: viewEmployee);
         }
 
-        // GET: EmployeeController/Create
+        
         public ActionResult Create() {
             var newEmployee = new EmployeeCreateDto();
             var prodCats = _employeeRepo.GetAll();
             return View(model: newEmployee);
         }
 
-        // POST: EmployeeController/Create
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(EmployeeCreateDto employee) {
@@ -70,7 +70,7 @@ namespace CoffeeShop.MVC.Controllers {
             }
         }
 
-        // GET: EmployeeController/Edit/5
+        
         public ActionResult Edit(int id) {
             if (id == null) {
                 return NotFound();
@@ -87,7 +87,6 @@ namespace CoffeeShop.MVC.Controllers {
         }
     
 
-        // POST: EmployeeController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, EmployeeEditDto employee) {
@@ -106,7 +105,7 @@ namespace CoffeeShop.MVC.Controllers {
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: EmployeeController/Delete/5
+        
         public ActionResult Delete(int id) {
             var dbEmployee = _employeeRepo.GetById(id);
             if (dbEmployee == null) {
@@ -120,7 +119,7 @@ namespace CoffeeShop.MVC.Controllers {
             return View(model: deleteEmployee);
         }
 
-        // POST: EmployeeController/Delete/5
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection) {

@@ -17,7 +17,7 @@ namespace CoffeeShop.Model
         public decimal TotalPrice { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
 
-        // Relations
+        
         public int CustomerId { get; set; }
         public Customer Customer { get; set; } = null!;
 

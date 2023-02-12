@@ -20,7 +20,7 @@ namespace CoffeeShop.Model
         public int SalaryPerMonth { get; set; }
         public EmployeeType EmployeeType { get; set; }
 
-        // Relations
+        
         public List<Transaction> Transactions { get; set; }
     }
 }
