@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CoffeeShop.EF.Migrations
 {
-    /// <inheritdoc />
+    
     public partial class Initial : Migration
     {
-        /// <inheritdoc />
+       
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -164,7 +164,7 @@ namespace CoffeeShop.EF.Migrations
                 column: "EmployeeId");
         }
 
-        /// <inheritdoc />
+        
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

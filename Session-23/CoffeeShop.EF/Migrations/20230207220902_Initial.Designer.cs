@@ -15,7 +15,7 @@ namespace CoffeeShop.EF.Migrations
     [Migration("20230207220902_Initial")]
     partial class Initial
     {
-        /// <inheritdoc />
+        
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
@@ -283,7 +283,7 @@ namespace CoffeeShop.EF.Migrations
                 {
                     b.Navigation("TransactionLines");
                 });
-#pragma warning restore 612, 618
+
         }
     }
 }

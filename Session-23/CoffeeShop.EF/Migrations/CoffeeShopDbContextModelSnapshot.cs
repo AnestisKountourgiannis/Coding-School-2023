@@ -280,7 +280,7 @@ namespace CoffeeShop.EF.Migrations
                 {
                     b.Navigation("TransactionLines");
                 });
-#pragma warning restore 612, 618
+
         }
     }
 }
