@@ -2,7 +2,8 @@
 
 namespace CoffeeShop.Model
 {
-    public class ProductCategory: BaseEntity { 
+    public class ProductCategory
+    {
         public ProductCategory(string code, string description, ProductType productType)
         {
             Code = code;
@@ -17,7 +18,7 @@ namespace CoffeeShop.Model
         public string Description { get; set; }
         public ProductType ProductType { get; set; }
 
-        
+        // Relations
         public List<Product> Products { get; set; }
     }
 }
