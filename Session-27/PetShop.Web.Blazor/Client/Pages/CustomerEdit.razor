@@ -1,0 +1,90 @@
+﻿@page "/customerlist/edit/{Id:int?}"
+@using PetShop.Model;
+@using PetShop.Web.Blazor.Shared.Customer;
+
+@inject HttpClient httpClient
+@inject NavigationManager navigationManager
+
+<h3>@title</h3>
+
+@if (Customer == null) {
+	<LoadingSpinner Type="LoadingSpinnerType.Border"/>
+} else {
+	<EditForm Model="Customer" OnValidSubmit="OnSave">
+		<DataAnnotationsValidator />
+		<ValidationSummary />
+		
+		<div class="row">
+			<div class="col-md-6">
+				<label class="form-label">Name</label>
+				<InputText class="form-control" @bind-Value="@Customer.Name" />
+			</div>
+		</div>
+
+		<div class="row">
+
+			<div class="col-md-6">
+				<label class="form-label">Surname</label>
+				<InputText class="form-control" @bind-Value="@Customer.Surname" />
+			</div>
+		</div>
+
+		<div class="row">
+
+			<div class="col-md-6">
+				<label class="form-label">Phone</label>
+				<InputText class="form-control" @bind-Value="@Customer.Phone" />
+			</div>
+		</div>
+
+		<div class="row">
+
+			<div class="col-md-6">
+				<label class="form-label">Tin</label>
+				<InputText class="form-control" @bind-Value="@Customer.Tin" />
+			</div>
+		</div>
+
+		<div class="row mt-2">
+			<div class="col">
+				<button class="btn btn-success" type="submit">Save</button>
+				<button class="btn btn-danger" @onclick="OnCancel">Cancel</button>
+			</div>
+
+		</div>
+	</EditForm>
+}
+
+@code {
+	[Parameter] public int? Id { get; set; }
+	CustomerEditDto Customer { get; set; }
+	string? title;
+
+	protected override async Task OnInitializedAsync() {
+		if (Id == null) {
+			Customer = new();
+			title = "Create Customer";
+		} else {
+			Customer = await httpClient.GetFromJsonAsync<CustomerEditDto>($"customer/{Id}");
+			title = "Edit Customer";
+		}
+	}
+	private void OnCancel() {
+		navigationManager.NavigateTo("customerlist");
+	}
+
+	private async Task OnSave() {
+		HttpResponseMessage? response = null;
+		if (Id == null) {
+			response = await httpClient.PostAsJsonAsync("customer", Customer);
+		} else {
+			response = await httpClient.PutAsJsonAsync("customer", Customer);
+		}
+
+		response.EnsureSuccessStatusCode();
+		navigationManager.NavigateTo("customerlist");
+	}
+
+
+
+}

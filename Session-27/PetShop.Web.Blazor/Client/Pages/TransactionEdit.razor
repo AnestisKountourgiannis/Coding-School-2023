@@ -1,0 +1,180 @@
+﻿@page "/transactionlist/edit/{Id:int?}"
+@using PetShop.Model
+@using PetShop.Web.Blazor.Shared.Customer;
+@using PetShop.Web.Blazor.Shared.Employee;
+@using PetShop.Web.Blazor.Shared.Pet;
+@using PetShop.Web.Blazor.Shared.PetFood;
+@using PetShop.Web.Blazor.Shared.Transaction;
+
+@inject HttpClient httpClient
+@inject NavigationManager navigationManager
+
+<h3>@title</h3>
+
+@if (isLoading) {
+    <LoadingSpinner Type="LoadingSpinnerType.Border" />
+} else {
+    <EditForm Model="Transaction" OnValidSubmit="OnSave">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="row">
+            @*<div class="col-md-4">
+        <label class="form-label">Date</label>
+        <input class="form-control"  @bind="@Transaction.Date" disabled />
+        </div>*@
+            <div class="col-md-4">
+                <label class="form-label">Pet</label>
+                <InputSelect class="form-control" @bind-Value="@Transaction.PetId" @bind-Value:after="@( ()=> getPetPrice(Transaction.PetId))">
+                    @foreach (var pet in Transaction.Pets) {
+                        <option value="@pet.Id">@pet.Breed</option>
+                    }
+                </InputSelect>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Pet Price</label>
+                <InputNumber class="form-control" @bind-Value="@Transaction.PetPrice" disabled />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="form-label">Pet Food</label>
+                <InputSelect class="form-control" @bind-Value="@Transaction.PetFoodId" @bind-Value:after="@( ()=> getPetFoodPrice(Transaction.PetFoodId))">
+                    @foreach (var petFood in Transaction.PetFoods) {
+
+                        <option value="@petFood.Id">@petFood.AnimalType</option>
+                    }
+                </InputSelect>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Pet Food Price</label>
+                <InputNumber class="form-control" @bind-Value="@Transaction.PetFoodPrice" disabled />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="form-label">Pet Food Qty</label>
+                <InputNumber class="form-control" @bind-Value="@Transaction.PetFoodQty" @bind-Value:after="@(() =>getTot())" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="form-label">Total Price</label>
+                <InputNumber class="form-control" @bind-Value="@Transaction.TotalPrice" disabled />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="form-label">Customer</label>
+                <InputSelect class="form-control" @bind-Value="@Transaction.CustomerId">
+                    @foreach (var customer in Transaction.Customers) {
+                        <option value="@customer.Id">@customer.Name @customer.Surname</option>
+                    }
+                </InputSelect>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="form-label">Employee</label>
+                <InputSelect class="form-control" @bind-Value="@Transaction.EmployeeId">
+                    @foreach (var employee in Transaction.Employees) {
+                        <option value="@employee.Id">@employee.Name @employee.Surname</option>
+                    }
+                </InputSelect>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col">
+                <button class="btn btn-success" type="submit">Save</button>
+                <button class="btn btn-danger" @onclick="OnCancel">Cancel</button>
+            </div>
+        </div>
+    </EditForm>
+}
+
+@code {
+    [Parameter] public int? Id { get; set; }
+    bool isLoading = true;
+    TransactionEditDto Transaction { get; set; }
+    string? title;
+
+    protected override async Task OnInitializedAsync() {
+        if (Id == null) {
+            title = "Create transaction";
+            Transaction = new();
+            Transaction.Customers = await httpClient.GetFromJsonAsync<List<CustomerEditDto>>("customer");
+            Transaction.Employees = await httpClient.GetFromJsonAsync<List<EmployeeEditDto>>("employee");
+            Transaction.Pets = (await httpClient.GetFromJsonAsync<List<PetEditDto>>("pet")).FindAll(pet => (((int)pet.PetStatus == 1) || (int)pet.PetStatus == 3));
+            Transaction.PetFoods = await httpClient.GetFromJsonAsync<List<PetFoodEditDto>>("petfood");
+            Transaction.TotalPrice = Transaction.PetPrice + Transaction.PetFoodPrice * Transaction.PetFoodQty;
+
+        } else {
+            title = "Edit Transaction";
+            Transaction = await httpClient.GetFromJsonAsync<TransactionEditDto>($"transaction/{Id}");
+            Transaction.Employees = await httpClient.GetFromJsonAsync<List<EmployeeEditDto>>("employee");
+            Transaction.Pets = (await httpClient.GetFromJsonAsync<List<PetEditDto>>("pet")).FindAll(pet => (((int)pet.PetStatus == 1) || (int)pet.PetStatus == 3)); ;
+            Transaction.PetFoods = await httpClient.GetFromJsonAsync<List<PetFoodEditDto>>("petfood");
+            Transaction.Customers = await httpClient.GetFromJsonAsync<List<CustomerEditDto>>("customer");
+
+        }
+
+        isLoading = false;
+    }
+    private void OnCancel() {
+        navigationManager.NavigateTo("transactionlist");
+    }
+    private async Task OnSave() {
+        HttpResponseMessage? response;
+        if (Id == null) {
+            response = await httpClient.PostAsJsonAsync("transaction", Transaction);
+        } else {
+            response = await httpClient.PutAsJsonAsync("transaction", Transaction);
+        }
+        response.EnsureSuccessStatusCode();
+        navigationManager.NavigateTo("transactionlist");
+    }
+    async Task getTot() {
+        if (Transaction.PetType == Transaction.FoodType) {
+            if (Transaction.PetFoodQty > 0) {
+                Transaction.TotalPrice = Transaction.PetPrice + Transaction.PetFoodPrice * (Transaction.PetFoodQty - 1);
+
+            } else {
+                Transaction.TotalPrice = Transaction.PetPrice + Transaction.PetFoodPrice * Transaction.PetFoodQty;
+            }
+        } else {
+            Transaction.TotalPrice = Transaction.PetPrice + Transaction.PetFoodPrice * Transaction.PetFoodQty;
+        }
+    }
+    async Task getPetPrice(int id) {
+        Transaction.PetPrice = Transaction.Pets.FirstOrDefault(pet => pet.Id == id).Price;
+        Transaction.TotalPrice = Transaction.PetPrice + Transaction.PetFoodPrice * Transaction.PetFoodQty;
+        Transaction.PetType = Transaction.Pets.Find(x => x.Id == id).AnimalType;
+
+        if (Transaction.PetType == Transaction.FoodType) {
+            if (Transaction.PetFoodQty > 0) {
+                Transaction.TotalPrice = Transaction.PetPrice + Transaction.PetFoodPrice * (Transaction.PetFoodQty - 1);
+
+            } else {
+                Transaction.TotalPrice = Transaction.PetPrice + Transaction.PetFoodPrice * Transaction.PetFoodQty;
+            }
+        } else {
+            Transaction.TotalPrice = Transaction.PetPrice + Transaction.PetFoodPrice * Transaction.PetFoodQty;
+        }
+
+    }
+    async Task getPetFoodPrice(int id) {
+
+        Transaction.PetFoodPrice = Transaction.PetFoods.FirstOrDefault(petFood => petFood.Id == id).Price;
+        Transaction.TotalPrice = Transaction.PetPrice + Transaction.PetFoodPrice * Transaction.PetFoodQty;
+        Transaction.FoodType = Transaction.PetFoods.Find(x => x.Id == id).AnimalType;
+        if (Transaction.PetType == Transaction.FoodType) {
+            if (Transaction.PetFoodQty > 0) {
+                Transaction.TotalPrice = Transaction.PetPrice + Transaction.PetFoodPrice * (Transaction.PetFoodQty - 1);
+            } else {
+                Transaction.TotalPrice = Transaction.PetPrice + Transaction.PetFoodPrice * Transaction.PetFoodQty;
+            }
+        }
+
+    }
+
+
+}

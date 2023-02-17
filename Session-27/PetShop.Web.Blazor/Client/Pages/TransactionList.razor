@@ -1,0 +1,76 @@
+﻿@page "/Transactionlist"
+@using PetShop.Web.Blazor.Shared.Transaction;
+@inject HttpClient httpClient
+@inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
+
+<h3>Transaction List</h3>
+
+@if (isLoading) {
+	<LoadingSpinner Type="LoadingSpinnerType.Border"/>
+} else {
+	<button class="btn btn-primary" @onclick="CreateItem">Create</button>
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Date</th>
+				<th>Customer</th>
+				<th>Employee</th>
+				<th>Pet</th>
+				<th>Pet Price</th>
+				<th>Pet Food</th>
+				<th>Pet Food Price</th>
+				<th>Pet Food Qty</th>
+				<th>Total Price</th>
+				<th>Options</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var transaction in transactionList) {
+				<tr>
+					<td>@transaction.Id</td>
+					<td>@transaction.Date</td>
+					<td>@transaction.CustomerFullName</td>
+					<td>@transaction.EmployeeFullName</td>
+					<td>@transaction.PetBreed</td>
+					<td>@transaction.PetPrice €</td>
+					<td>@transaction.PetFoodAnimalType</td>
+					<td>@transaction.PetFoodPrice €</td>
+					<td>@transaction.PetFoodQty</td>
+					<td>@transaction.TotalPrice €</td>
+					<td>
+						<button class="btn btn-primary" @onclick="()=> EditItem(transaction)">Edit</button>
+						<button class="btn btn-danger" @onclick="()=> DeleteItem(transaction)">Delete</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code {
+	private List<TransactionListDto> transactionList = new();
+	bool isLoading { get; set; } = true;
+	protected override async Task OnInitializedAsync() {
+		await LoadItemsFromServer();
+		isLoading = false;
+	}
+	private async Task LoadItemsFromServer() {
+		transactionList = await httpClient.GetFromJsonAsync<List<TransactionListDto>>("transaction");
+	}
+	private void CreateItem() {
+		navigationManager.NavigateTo("transactionlist/edit");
+	}
+	private void EditItem(TransactionListDto transaction) {
+		navigationManager.NavigateTo($"transactionlist/edit/{transaction.Id}");
+	}
+	private async Task DeleteItem(TransactionListDto transaction) {
+		var confirm = await jsRuntime.InvokeAsync<bool>("confirm", "Delete Item. Are you sure?");
+		if (confirm) {
+			var response = await httpClient.DeleteAsync($"transaction/{transaction.Id}");
+			response.EnsureSuccessStatusCode();
+			await LoadItemsFromServer();
+		}
+	}
+}

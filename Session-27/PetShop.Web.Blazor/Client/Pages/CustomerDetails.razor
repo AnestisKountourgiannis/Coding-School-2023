@@ -1,0 +1,84 @@
+﻿@page "/customerlist/details/{Id:int}"
+@using PetShop.Web.Blazor.Shared.Customer;
+@inject HttpClient httpClient
+@inject NavigationManager navigationManager
+
+<h3>Customer Details</h3>
+
+@if (isLoading) {
+	<LoadingSpinner Type="LoadingSpinnerType.Border" />
+} else {
+	<hr />
+	<dl class="row">
+		<dt class="col-sm-2">Name:</dt>
+		<dd class="col-sm-2">@customerDto.Name</dd>
+	</dl>
+	<dl class="row">
+		<dt class="col-sm-2">Surname:</dt>
+		<dd class="col-sm-2">@customerDto.Surname</dd>
+	</dl>
+	<dl class="row">
+		<dt class="col-sm-2">Phone:</dt>
+		<dd class="col-sm-2">@customerDto.Phone</dd>
+	</dl>
+	<dl class="row">
+		<dt class="col-sm-2">Tin:</dt>
+		<dd class="col-sm-2">@customerDto.Tin</dd>
+	</dl>
+	<hr />
+
+	<h5>Transactions</h5>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Date</th>
+				<th>Customer</th>
+				<th>Employee</th>
+				<th>Pet</th>
+				<th>Pet Price</th>
+				<th>Pet Food</th>
+				<th>Pet Food Quantity</th>
+				<th>Pet Food Price</th>
+				<th>Total Price</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in customerDto.Transactions) {
+				<tr>
+					<td>@item.Date</td>
+					<td>@item.CustomerFullName</td>
+					<td>@item.EmployeeFullName</td>
+					<td>@item.PetBreed</td>
+					<td>@item.PetPrice €</td>
+					<td>@item.PetFoodAnimalType</td>
+					<td>@item.PetFoodQty</td>
+					<td>@item.PetFoodPrice €</td>
+					<td>@item.TotalPrice €</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	<button class="btn btn-primary" @onclick="()=> EditItem(customerDto)">Edit</button>
+	<button class="btn btn-dark" @onclick="BackToList">Back to List</button>
+}
+
+@code {
+	[Parameter] public int Id { get; set; }
+	bool isLoading { get; set; } = true;
+	CustomerDetailsDto customerDto { get; set; }
+
+	protected override async Task OnInitializedAsync() {
+		customerDto = await httpClient.GetFromJsonAsync<CustomerDetailsDto>($"customer/details/{Id}");
+		isLoading = false;
+	}
+
+	private void EditItem(CustomerDetailsDto customer) {
+		navigationManager.NavigateTo($"customerlist/edit/{customer.Id}");
+	}
+
+	private void BackToList() {
+		navigationManager.NavigateTo($"customerlist");
+	}
+}

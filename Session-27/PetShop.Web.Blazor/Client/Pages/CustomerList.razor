@@ -1,0 +1,85 @@
+﻿@page "/customerlist"
+@using PetShop.Web.Blazor.Shared.Customer;
+@inject HttpClient httpClient
+@inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
+
+<h3>Customer List</h3>
+@if (isLoading) {
+	<LoadingSpinner Type="LoadingSpinnerType.Border" />
+} else {
+	@if (errorMessage != null) {
+		<p class="text-danger">@errorMessage</p>
+	}
+	<button class="btn btn-primary" @onclick="CreateItem">Create</button>
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Suname</th>
+				<th>Phone</th>
+				<th>Tin</th>
+				<th>Options</th>
+			</tr>
+		</thead>
+
+
+		<tbody>
+			@foreach (var customer in customerList) {
+				<tr>
+					<td>@customer.Name</td>
+					<td>@customer.Surname</td>
+					<td>@customer.Phone</td>
+					<td>@customer.Tin</td>
+					<td>
+						<button class="btn btn-primary" @onclick="()=> EditItem(customer)">Edit</button>
+						<button class="btn btn-secondary" @onclick="() => DetailsItem(customer)">Details</button>
+						<button class="btn btn-danger" @onclick="()=> DeleteItem(customer)">Delete</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+
+
+
+	</table>
+}
+
+
+@code {
+	private List<CustomerListDto> customerList = new();
+	bool isLoading { get; set; } = true;
+	string errorMessage = null;
+
+	protected override async Task OnInitializedAsync() {
+		await LoadItemsFromServer();
+		isLoading = false;
+	}
+	private async Task LoadItemsFromServer() {
+		customerList = await httpClient.GetFromJsonAsync<List<CustomerListDto>>("customer");
+	}
+	private void CreateItem() {
+		navigationManager.NavigateTo("customerlist/edit");
+	}
+	private void EditItem(CustomerListDto customer) {
+		navigationManager.NavigateTo($"customerlist/edit/{customer.Id}");
+	}
+
+	private void DetailsItem(CustomerListDto customer) {
+		navigationManager.NavigateTo($"customerlist/details/{customer.Id}");
+	}
+
+	private async Task DeleteItem(CustomerListDto customer) {
+
+		errorMessage = null;
+		var confirm = await jsRuntime.InvokeAsync<bool>("confirm", "Delete Item. Are you sure?");
+		if (confirm) {
+			var response = await httpClient.DeleteAsync($"customer/{customer.Id}");
+			if (response.IsSuccessStatusCode) {
+				await LoadItemsFromServer();
+			} else {
+				errorMessage = "You can't delete this Customer.";
+			}
+		}
+	}
+}

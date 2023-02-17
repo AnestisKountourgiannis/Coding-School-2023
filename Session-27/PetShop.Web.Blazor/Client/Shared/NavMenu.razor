@@ -1,0 +1,95 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid d-flex justify-content-center align-items-center">
+        <a class="navbar-brand" href="">Pet Shop</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="d-inline-block align-middle mr-2">
+                    <img src="img/Home.png" alt="Home">
+                </span>
+                <span class="align-middle" style="margin-left: 10px;">Home</span>
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+        <NavLink class="nav-link" href="customerList">
+            <span class="d-inline-block align-middle mr-2">
+                <img src="img/Customer.png" alt="Counter">
+            </span>
+            <span class="align-middle" style="margin-left: 10px;">Customers</span>
+        </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="petFoodList">
+                <span class="d-inline-block align-middle mr-2">
+                    <img src="img/PetFood.png" alt="PetFood">
+                </span>
+                <span class="align-middle" style="margin-left: 10px;">Pet Food</span>
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="employeeList">
+                <span class="d-inline-block align-middle mr-2">
+                    <img src="img/Employee.png" alt="Employee">
+                </span>
+                <span class="align-middle" style="margin-left: 10px;">Employees</span>
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="petlist">
+                <span class="d-inline-block align-middle mr-2">
+                    <img src="img/Pet.png" alt="Pet">
+                </span>
+                <span class="align-middle" style="margin-left: 10px;">Pets</span>
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="transactionlist">
+                <span class="d-inline-block align-middle mr-2">
+                    <img src="img/Transaction.png" alt="Pet">
+                </span>
+                <span class="align-middle" style="margin-left: 10px;">Transactions</span>
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="monthlyledger">
+                <span class="d-inline-block align-middle mr-2">
+                    <img src="img/MonthlyLedger.png" alt="Monthly Ledger">
+                </span>
+                <span class="align-middle" style="margin-left: 10px;">Monthly Ledger</span>
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="petreport">
+                <span class="d-inline-block align-middle mr-2">
+                    <img src="img/PetReport.png" alt="Pet Report">
+                </span>
+                <span class="align-middle" style="margin-left: 10px;">Pet Report</span>
+            </NavLink>
+        </div>
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

@@ -1,0 +1,81 @@
+﻿@page "/petfoodlist/edit/{Id:int?}"
+@using PetShop.Model.Enums;
+@using PetShop.Web.Blazor.Shared.PetFood;
+@inject HttpClient httpClient
+@inject NavigationManager navigationManager
+
+<h3>@title</h3>
+
+@if (PetFood == null) {
+	<LoadingSpinner Type="LoadingSpinnerType.Border" />
+} else {
+
+	<EditForm Model="PetFood" OnValidSubmit="OnSave">
+		<DataAnnotationsValidator />
+		<ValidationSummary />
+		<div class="row">
+			<div class="col-md-6">
+				<label class="form-label">Animal Type</label>
+				<InputSelect class="form-control" @bind-Value="PetFood.AnimalType">
+
+					@foreach (var enumValue in Enum.GetValues<AnimalType>()) {
+						<option value="@enumValue">@enumValue</option>
+					}
+
+				</InputSelect>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<label class="form-label">Price</label>
+					<InputNumber class="form-control" @bind-Value="@PetFood.Price" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<label class="form-label">Cost</label>
+					<InputNumber class="form-control" @bind-Value="@PetFood.Cost" />
+				</div>
+			</div>
+		</div>
+
+		<div class="row mt-2">
+			<div class="col">
+				<button class="btn btn-success" type="submit">Save</button>
+				<button class="btn btn-danger" @onclick="OnCancel">Cancel</button>
+			</div>
+
+		</div>
+	</EditForm>
+}
+
+@code {
+	[Parameter] public int? Id { get; set; }
+	PetFoodEditDto PetFood { get; set; }
+	string? title;
+
+	protected override async Task OnInitializedAsync() {
+		if (Id == null) {
+			PetFood = new();
+			title = "Create Pet Food";
+		} else {
+			PetFood = await httpClient.GetFromJsonAsync<PetFoodEditDto>($"petfood/{Id}");
+			title = "Edit Pet Food";
+		}
+	}
+
+	private void OnCancel() {
+		navigationManager.NavigateTo("petfoodlist");
+	}
+
+	private async Task OnSave() {
+		HttpResponseMessage? response = null;
+		if (Id == null) {
+			response = await httpClient.PostAsJsonAsync("petfood", PetFood);
+		} else {
+			response = await httpClient.PutAsJsonAsync("petfood", PetFood);
+		}
+
+		response.EnsureSuccessStatusCode();
+		navigationManager.NavigateTo("petfoodlist");
+	}
+}

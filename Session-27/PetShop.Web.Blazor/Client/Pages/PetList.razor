@@ -1,0 +1,85 @@
+﻿@page "/petlist"
+@using PetShop.Web.Blazor.Shared.Pet;
+@inject HttpClient httpClient
+@inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
+
+<h3>Pet List</h3>
+@if (isLoading) {
+	<LoadingSpinner Type="LoadingSpinnerType.Border"/>
+} else {
+	@if (errorMessage != null)
+	{
+		<p class="text-danger">@errorMessage</p>
+	}
+	<button class="btn btn-primary" @onclick="CreateItem">Create</button>
+
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Breed</th>
+				<th>Animal Type</th>
+				<th>Pet Status</th>
+				<th>Price</th>
+				<th>Cost</th>
+				<th>Options</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var pet in petList) {
+				<tr>
+					<td>@pet.Breed</td>
+					<td>@pet.AnimalType</td>
+					<td>@pet.PetStatus</td>
+					<td>@pet.Price €</td>
+					<td>@pet.Cost €</td>
+					<td>
+						<button class="btn btn-primary" @onclick="()=> EditItem(pet)">Edit</button>
+						<button class="btn btn-secondary" @onclick="()=> DetailsItem(pet)">Details</button>
+						<button class="btn btn-danger" @onclick="()=> DeleteItem(pet)">Delete</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+@code {
+	private List<PetListDto> petList = new();
+	bool isLoading { get; set; } = true;
+	string errorMessage = null;
+
+
+	protected override async Task OnInitializedAsync() {
+		await LoadItemsFromServer();
+		isLoading = false;
+	}
+
+	private async Task LoadItemsFromServer() {
+		petList = await httpClient.GetFromJsonAsync<List<PetListDto>>("pet");
+	}
+
+	private void CreateItem() {
+		navigationManager.NavigateTo("petlist/edit");
+	}
+
+	private void EditItem(PetListDto pet) {
+		navigationManager.NavigateTo($"petlist/edit/{pet.Id}");
+	}
+
+	private void DetailsItem(PetListDto pet) {
+		navigationManager.NavigateTo($"petlist/details/{pet.Id}");
+	}
+
+	private async Task DeleteItem(PetListDto pet) {
+		errorMessage = null;
+		var confirm = await jsRuntime.InvokeAsync<bool>("confirm", "Delete Item. Are you sure?");
+		if (confirm) {
+			var response = await httpClient.DeleteAsync($"pet/{pet.Id}");
+			if (response.IsSuccessStatusCode) {
+				await LoadItemsFromServer();
+			} else {
+				errorMessage = "You can't delete this pet.";
+			}
+		}
+	}
+}
