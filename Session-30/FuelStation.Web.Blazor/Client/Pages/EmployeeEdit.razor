@@ -1,0 +1,174 @@
+﻿@page "/employeelist/edit/{Id:int?}"
+@using FuelStation.Model.Enums;
+@using FuelStation.Web.Blazor.Shared.Employee;
+@inject HttpClient httpClient
+@inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
+
+
+<h3>@title</h3>
+
+@if (Employee == null) {
+	<LoadingSpinner Type="LoadingSpinnerType.Border" />
+} else {
+	<EditForm Model="Employee" OnValidSubmit="OnSave">
+		<DataAnnotationsValidator />
+
+		<div class="row">
+			<div class="col-md-6">
+				<label class="form-label">Name</label>
+				<InputText class="form-control" @bind-Value="@Employee.Name" />
+				<ValidationMessage For="@(()=>Employee.Name)" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<label class="form-label">Surname</label>
+				<InputText class="form-control" @bind-Value="@Employee.Surname" />
+				<ValidationMessage For="@(()=>Employee.Surname)" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<label class="form-label">Hire Date Start</label>
+				<InputDate class="form-control" @bind-Value="@Employee.HireDateStart" />
+				<ValidationMessage For="@(()=>Employee.HireDateStart)" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<label class="form-label">Hire Date End</label>
+				<InputDate class="form-control" @bind-Value="@Employee.HireDateEnd" />
+				<ValidationMessage For="@(()=>Employee.HireDateEnd)" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<label class="form-label">Salary Per Month</label>
+				<InputNumber class="form-control" @bind-Value="@Employee.SallaryPerMonth" />
+				<ValidationMessage For="@(()=>Employee.SallaryPerMonth)" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<label class="form-label">Employee Type</label>
+				<InputSelect class="form-control" @bind-Value="Employee.EmployeeType">
+					@foreach (var enumValue in Enum.GetValues<EmployeeType>()) {
+						<option value="@enumValue">@enumValue</option>
+					}
+				</InputSelect>
+			</div>
+		</div>
+		<div class="row mt-2">
+			<div class="col">
+				<button class="btn btn-secondary" type="submit">Save</button>
+				<button class="btn btn-danger" @onclick="OnCancel">Cancel</button>
+			</div>
+		</div>
+	</EditForm>
+
+}
+
+@code {
+	[Parameter] public int? Id { get; set; }
+	EmployeeEditDto Employee { get; set; }
+	string? title;
+	private List<EmployeeListDto> employeeList = new();
+	private int _managersSum = 0;
+	private int _cashiersSum = 0;
+	private int _staffSum = 0;
+	string message = "";
+
+	protected override async Task OnInitializedAsync() {
+		if (Id == null) {
+			Employee = new();
+			title = "Create Employee";
+		} else {
+			Employee = await httpClient.GetFromJsonAsync<EmployeeEditDto>($"employee/{Id}");
+			title = "Edit Employee";
+		}
+		employeeList = await httpClient.GetFromJsonAsync<List<EmployeeListDto>>("employee");
+	}
+
+	private void OnCancel() {
+		navigationManager.NavigateTo("employeelist");
+	}
+
+	private async Task OnSave() {
+		HttpResponseMessage? response = null;
+
+		foreach (var employee in employeeList) {
+			if(employee.EmployeeType.ToString() == "Manager") {
+				_managersSum += 1;
+			}
+			if(employee.EmployeeType.ToString() == "Staff") {
+				_staffSum += 1;
+			}
+			if(employee.EmployeeType.ToString() == "Cashier") {
+				_cashiersSum += 1;
+			}
+		}
+
+		if (Id == null) {
+			if(Employee.EmployeeType.ToString() == "Manager" && _managersSum < 3) {
+				response = await httpClient.PostAsJsonAsync("employee", Employee);
+				response.EnsureSuccessStatusCode();
+				navigationManager.NavigateTo("employeelist");
+			}
+			else if(Employee.EmployeeType.ToString() == "Staff" && _staffSum < 10) {
+				response = await httpClient.PostAsJsonAsync("employee", Employee);
+				response.EnsureSuccessStatusCode();
+				navigationManager.NavigateTo("employeelist");
+			}
+			else if(Employee.EmployeeType.ToString() == "Cashier" && _cashiersSum < 4) {
+				response = await httpClient.PostAsJsonAsync("employee", Employee);
+				response.EnsureSuccessStatusCode();
+				navigationManager.NavigateTo("employeelist");
+			} 
+			else {
+				if(Employee.EmployeeType.ToString() == "Manager") {
+					message = "Fuel Station can't have more than 3 Managers.";
+				}
+				else if(Employee.EmployeeType.ToString() == "Staff"){
+					message = "Fuel Station can't have more than 10 Staff Members.";
+				} 
+				else {
+					message = "Fuel Station can't have more than 4 Cashiers.";
+				}
+				await jsRuntime.InvokeVoidAsync("alert", message);
+				navigationManager.NavigateTo("employeelist");	
+			}
+
+		} else {
+			if (Employee.EmployeeType.ToString() == "Manager" && _managersSum < 3) {
+				response = await httpClient.PutAsJsonAsync("employee", Employee);
+				response.EnsureSuccessStatusCode();
+				navigationManager.NavigateTo("employeelist");
+			} 
+			else if (Employee.EmployeeType.ToString() == "Staff" && _staffSum < 10) {
+				response = await httpClient.PutAsJsonAsync("employee", Employee);
+				response.EnsureSuccessStatusCode();
+				navigationManager.NavigateTo("employeelist");
+			} 
+			else if (Employee.EmployeeType.ToString() == "Cashier" && _cashiersSum < 4) {
+				response = await httpClient.PutAsJsonAsync("employee", Employee);
+				response.EnsureSuccessStatusCode();
+				navigationManager.NavigateTo("employeelist");
+			} 
+			else {
+				if (Employee.EmployeeType.ToString() == "Manager") {
+					message = "Fuel Station can't have more than 3 Managers.";
+				} 
+				else if (Employee.EmployeeType.ToString() == "Staff") {
+					message = "Fuel Station can't have more than 10 Staff Members.";
+				} 
+				else {
+					message = "Fuel Station can't have more than 4 Cashiers.";
+				}
+				await jsRuntime.InvokeVoidAsync("alert", message);
+				navigationManager.NavigateTo("employeelist");
+			}
+		}
+
+	}
+}

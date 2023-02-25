@@ -1,0 +1,94 @@
+﻿@page "/itemlist/edit/{Id:int?}"
+@using FuelStation.Model.Enums;
+@using FuelStation.Web.Blazor.Shared.Item;
+@inject HttpClient httpClient
+@inject NavigationManager navigationManager
+
+
+<h3>@title</h3>
+
+@if (Item == null) {
+		<LoadingSpinner Type="LoadingSpinnerType.Border" />
+} else {
+		<EditForm Model="Item" OnValidSubmit="OnSave">
+			<DataAnnotationsValidator />
+
+			<div class="row">
+				<div class="col-md-6">
+					<label class="form-label">Code</label>
+					<InputText class="form-control" @bind-Value="@Item.Code" />
+					<ValidationMessage For="@(()=>Item.Code)" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<label class="form-label">Description</label>
+					<InputText class="form-control" @bind-Value="@Item.Description" />
+					<ValidationMessage For="@(()=>Item.Description)" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<label class="form-label">Item Type</label>
+					<InputSelect class="form-control" @bind-Value="Item.ItemType">
+						@foreach (var enumValue in Enum.GetValues<ItemType>()) {
+							<option value="@enumValue">@enumValue</option>
+						}
+					</InputSelect>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<label class="form-label">Price</label>
+					<InputNumber class="form-control" @bind-Value="@Item.Price" />
+					<ValidationMessage For="@(()=>Item.Price)" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<label class="form-label">Cost</label>
+					<InputNumber class="form-control" @bind-Value="@Item.Cost" />
+					<ValidationMessage For="@(()=>Item.Cost)" />
+				</div>
+			</div>
+			<div class="row mt-2">
+				<div class="col">
+					<button class="btn btn-secondary" type="submit">Save</button>
+					<button class="btn btn-danger" @onclick="OnCancel">Cancel</button>
+				</div>
+			</div>
+		</EditForm>
+
+}
+
+@code {
+	[Parameter] public int? Id { get; set; }
+	ItemEditDto Item { get; set; }
+	string? title;
+
+	protected override async Task OnInitializedAsync() {
+		if (Id == null) {
+			Item = new();
+			title = "Create Item";
+		} else {
+			Item = await httpClient.GetFromJsonAsync<ItemEditDto>($"item/{Id}");
+			title = "Edit Item";
+		}
+	}
+
+	private void OnCancel() {
+		navigationManager.NavigateTo("itemlist");
+	}
+
+	private async Task OnSave() {
+		HttpResponseMessage? response = null;
+		if (Id == null) {
+			response = await httpClient.PostAsJsonAsync("item", Item);
+		} else {
+			response = await httpClient.PutAsJsonAsync("item", Item);
+		}
+
+		response.EnsureSuccessStatusCode();
+		navigationManager.NavigateTo("itemlist");
+	}
+}

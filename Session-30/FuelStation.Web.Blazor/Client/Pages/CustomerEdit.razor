@@ -1,0 +1,76 @@
+﻿@page "/customerlist/edit/{Id:int?}"
+@using FuelStation.Web.Blazor.Shared.Customer;
+@inject HttpClient httpClient
+@inject NavigationManager navigationManager
+
+
+<h3>@title</h3>
+
+@if (Customer == null) {
+	<LoadingSpinner Type="LoadingSpinnerType.Border" />
+} else {
+	<EditForm Model="Customer" OnValidSubmit="OnSave">
+		<DataAnnotationsValidator />
+
+		<div class="row">
+			<div class="col-md-6">
+				<label class="form-label">Name</label>
+				<InputText class="form-control" @bind-Value="@Customer.Name" />
+				<ValidationMessage For="@(()=>Customer.Name)" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<label class="form-label">Surname</label>
+				<InputText class="form-control" @bind-Value="@Customer.Surname" />
+				<ValidationMessage For="@(()=>Customer.Surname)" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<label class="form-label">Card Number</label>
+				<InputText class="form-control" @bind-Value="@Customer.CardNumber" />
+				<ValidationMessage For="@(()=>Customer.CardNumber)" />
+			</div>
+		</div>
+		<div class="row mt-2">
+			<div class="col">
+				<button class="btn btn-secondary" type="submit">Save</button>
+				<button class="btn btn-danger" @onclick="OnCancel">Cancel</button>
+			</div>
+		</div>
+	</EditForm>
+
+}
+
+@code {
+	[Parameter] public int? Id { get; set; }
+	CustomerEditDto Customer { get; set; }
+	string? title;
+
+	protected override async Task OnInitializedAsync() {
+		if (Id == null) {
+			Customer = new();
+			title = "Create Customer";
+		} else {
+			Customer = await httpClient.GetFromJsonAsync<CustomerEditDto>($"customer/{Id}");
+			title = "Edit Customer";
+		}
+	}
+
+	private void OnCancel() {
+		navigationManager.NavigateTo("customerlist");
+	}
+
+	private async Task OnSave() {
+		HttpResponseMessage? response = null;
+		if (Id == null) {
+			response = await httpClient.PostAsJsonAsync("customer", Customer);
+		} else {
+			response = await httpClient.PutAsJsonAsync("customer", Customer);
+		}
+
+		response.EnsureSuccessStatusCode();
+		navigationManager.NavigateTo("customerlist");
+	}
+}

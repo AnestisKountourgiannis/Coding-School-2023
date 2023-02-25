@@ -1,0 +1,93 @@
+﻿@page "/employeelist"
+@using FuelStation.Web.Blazor.Shared.Employee;
+@inject HttpClient httpClient
+@inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
+
+
+<h3>Employees</h3>
+
+@if (isLoading) {
+	<LoadingSpinner Type="LoadingSpinnerType.Border" />
+} else {
+	@if (errorMessage != null) {
+		<p class="text-danger">@errorMessage</p>
+	}
+	<button class="btn btn-outline-secondary" @onclick="CreateItem">Create</button>
+
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Surname</th>
+				<th>Hire Date Start</th>
+				<th>Hire Date End</th>
+				<th>Salary Per Month</th>
+				<th>Employee Type</th>
+				<th>Options</th>
+
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var employee in employeeList) {
+				<tr>
+					<td>@employee.Name</td>
+					<td>@employee.Surname</td>
+					<td>@employee.HireDateStart</td>
+					<td>@employee.HireDateEnd</td>
+					<td>@employee.SallaryPerMonth €</td>
+					<td>@employee.EmployeeType</td>
+					<td>
+						<button class="btn btn-secondary" @onclick="()=> EditItem(employee)">Edit</button>
+						<button class="btn btn-secondary" @onclick="() => DetailsItem(employee)">Details</button>
+						<button class="btn btn-danger" @onclick="()=> DeleteItem(employee)">Delete</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+
+
+
+@code {
+	private List<EmployeeListDto> employeeList = new();
+	bool isLoading { get; set; } = true;
+	string errorMessage = null;
+
+	protected override async Task OnInitializedAsync() {
+		await LoadItemsFromServer();
+		isLoading = false;
+	}
+
+	private async Task LoadItemsFromServer() {
+		employeeList = await httpClient.GetFromJsonAsync<List<EmployeeListDto>>("employee");
+	}
+
+	private void CreateItem() {
+		navigationManager.NavigateTo("employeelist/edit");
+	}
+
+	private void EditItem(EmployeeListDto employee) {
+		navigationManager.NavigateTo($"employeelist/edit/{employee.Id}");
+	}
+
+	private void DetailsItem(EmployeeListDto employee){
+		navigationManager.NavigateTo($"employeelist/details/{employee.Id}");
+	}
+
+	private async Task DeleteItem(EmployeeListDto employee) {
+		
+		errorMessage = null;
+		var confirm = await jsRuntime.InvokeAsync<bool>("confirm", "Delete Item. Are you sure?");
+		if (confirm) {
+			var response = await httpClient.DeleteAsync($"employee/{employee.Id}");
+			if (response.IsSuccessStatusCode) {
+				await LoadItemsFromServer();
+			} else {
+				errorMessage = "You can't delete this Employee.";
+			}
+		}
+	}
+}

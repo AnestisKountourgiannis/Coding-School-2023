@@ -1,0 +1,91 @@
+﻿@page "/itemlist"
+@using FuelStation.Web.Blazor.Shared.Item;
+@inject HttpClient httpClient
+@inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
+
+
+<h3>Items</h3>
+
+@if (isLoading) {
+	<LoadingSpinner Type="LoadingSpinnerType.Border" />
+} else {
+	@if (errorMessage != null) {
+		<p class="text-danger">@errorMessage</p>
+	}
+	<button class="btn btn-outline-secondary" @onclick="CreateItem">Create</button>
+
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Code</th>
+				<th>Description</th>
+				<th>Item Type</th>
+				<th>Price</th>
+				<th>Cost</th>
+				<th>Options</th>
+
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in itemList) {
+				<tr>
+					<td>@item.Code</td>
+					<td>@item.Description</td>
+					<td>@item.ItemType</td>
+					<td>@item.Price</td>
+					<td>@item.Cost</td>
+					<td>
+						<button class="btn btn-secondary" @onclick="()=> EditItem(item)">Edit</button>
+						<button class="btn btn-secondary" @onclick="() => DetailsItem(item)">Details</button>
+						<button class="btn btn-danger" @onclick="()=> DeleteItem(item)">Delete</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+
+
+
+@code {
+	private List<ItemListDto> itemList = new();
+	bool isLoading { get; set; } = true;
+	string errorMessage = null;
+
+	protected override async Task OnInitializedAsync() {
+		await LoadItemsFromServer();
+		isLoading = false;
+	}
+
+	private async Task LoadItemsFromServer() {
+		itemList = await httpClient.GetFromJsonAsync<List<ItemListDto>>("item");
+	}
+
+	private void CreateItem() {
+		navigationManager.NavigateTo("itemlist/edit");
+	}
+
+	private void EditItem(ItemListDto item) {
+		navigationManager.NavigateTo($"itemlist/edit/{item.Id}");
+	}
+
+	private void DetailsItem(ItemListDto item) {
+		navigationManager.NavigateTo($"itemlist/details/{item.Id}");
+	}
+
+	private async Task DeleteItem(ItemListDto item) {
+
+		errorMessage = null;
+		var confirm = await jsRuntime.InvokeAsync<bool>("confirm", "Delete Item. Are you sure?");
+		if (confirm) {
+			var response = await httpClient.DeleteAsync($"item/{item.Id}");
+			if (response.IsSuccessStatusCode) {
+				await LoadItemsFromServer();
+			} else {
+				errorMessage = "You can't delete this Item.";
+			}
+		}
+	}
+}
